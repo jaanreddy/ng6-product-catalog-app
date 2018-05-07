@@ -1,0 +1,71 @@
+<div class="container">
+    <h2>Product catalog</h2>
+    <hr/>
+    <div class="alert alert-danger" *ngIf="!products || products.length === 0">
+        No products found!
+    </div>
+    <form class="form-horizontal" *ngIf="products && products.length !== 0">
+        <div class="form-group">
+            <label for="filter" class="control-label col-md-3">Filter</label>
+            <div class="col-md-9">
+                <input type="search" id="filter" name="filter" placeholder="Type in here to filter by product name" class="form-control" (input)="updateFilterKey($event)" [(ngModel)]="filterKey" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                <input type="button" value="Clear filter" (click)="filterKey = ''" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+    <div class="alert alert-info" *ngIf="filterKey">
+        Results displayed for "<span [ngStyle]="{ color: 'goldenrod' }">{{filterKey}}</span>"
+    </div>
+    <table class="table table-bordered table-striped" *ngIf="filteredProducts?.length !== 0">
+        <thead>
+            <tr>
+                <th>
+                    Image
+                    <input type="button" [value]="imageSeen === true ? 'Hide Image' : 'Show image'" class="btn btn-primary btn-sm" (click)="toggleImage()" />
+                </th>
+                <th>Name</th>
+                <th>Item code</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Rating</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- #1: {{variable}} - Data-binding variables to text (interpolation) -->
+            <!-- #2: [attribute]="variable" is the property-binding syntax -->
+            <!-- #3: (event)="method()" - Event binding syntax -->
+            <!-- #4: [(ngModel)]="variable"
+            
+            <!--
+                The loop variable product is available anywhere within the entire tr - even within event handler of event bound, eg. (mouseover)="mouseOverHandler(product)
+            -->
+            <tr *ngFor="let product of filteredProducts; let i = index" (mouseover)="mouseOverHandler(product)">
+                <td>
+                    <img src={{product.imageUrl}} [style.width.px]="imageWidthLarge" *ngIf="i === 2 && imageSeen === true" /> <!-- style="width:50px;" -->
+                    <img src={{product.imageUrl}} [style.width.px]="imageWidth" *ngIf="i !== 2 && imageSeen === true" />
+                </td>
+                <td>
+                    <a [routerLink]="['/products', product.id]">{{product.name}}</a>
+                </td> <!-- try using uppercase pipe here -->
+                <td>{{product.code}}</td>
+                <td class="description-cell">
+                    <div *ngIf="product.isShortDescription" class="short-description">
+                        {{product.description | ellipsize:20}}
+                    </div>
+                    <div *ngIf="!product.isShortDescription" class="long-description">
+                        {{product.description}}
+                    </div>
+                    <span (click)="toggleDescription(product)" [ngClass]="{ 'read-more': product.isShortDescription, 'read-less': !product.isShortDescription }" [innerHTML]="product.isShortDescription ? 'Read more' : 'Read less'"></span>
+                </td>
+                <td>{{product.price | currency:'GBP':true:'1.2-2'}}</td>
+                <td> <!--(click)="decreaseRating(product)"> --><!-- dummy scenario to illustrate concept -->
+                    <app-star-rating [rating]="product.starRating" (starClicked)="onStarClicked($event)"></app-star-rating>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,26 @@
+img {
+    display: block;
+    /*width: 50px;*/
+    margin: 0 auto;
+}
+
+.description-cell {
+    width: 400px;
+}
+
+.read-more, .read-less {
+    cursor: pointer;
+}
+
+.read-more:hover, .read-less:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.read-more {
+    color: crimson;
+}
+
+.read-less {
+    color: olive;
+}

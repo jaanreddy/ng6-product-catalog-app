@@ -1,0 +1,15 @@
+<div class="list-group" *ngIf="reviews">
+  <a class="list-group-item active">
+      User reviews
+  </a>
+  <a class="list-group-item" *ngFor="let review of reviews">
+      <app-star-rating [rating]="review.starRating"></app-star-rating>
+      <h4 class="review-title">{{review.title}}</h4>
+      <div>
+          <small>
+              By <span>{{review.reviewer}}</span> on <span>{{review.createdDate}}</span>
+          </small>
+      </div>
+      <p class="review-text">{{review.text}}</p>
+  </a>
+</div>

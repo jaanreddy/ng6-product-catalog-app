@@ -1,0 +1,40 @@
+<div class="container">
+  <app-panel [heading]="product.name" *ngIf="product">
+      <app-two-columns>
+        <!-- this will be inserted into the first matched ng-content slot of app-two-columns -->
+        <div class="col-1">
+          <img [src]="product.imageUrl" class="img-responsive" />
+        </div>
+
+        <!-- this will be inserted into the first matched ng-content slot of app-two-columns -->
+        <div class="col-2">
+          <h2>{{product.name}}</h2>
+          <app-star-rating [rating]="product.starRating"></app-star-rating>
+          <br /><br />
+          Product id: {{product.id}}
+          <br />
+          Product code: {{product.code}}
+          <br />
+          Released on: {{product.releaseDate}}
+          <br /><br />
+          <p>{{product.description}}</p>
+          <br />
+          Price: {{product.price | currency:'GBP':true:'1.2-2'}}
+          <br /><br />
+          <button class="btn btn-primary" (click)="navigateToProductCatalogView()">Back to product catalog</button>
+        </div>
+        
+        <!-- Unmatched content goes into ng-content with no selector - uncomment and check -->
+        <!-- <div>Unmatched</div> -->
+      </app-two-columns>
+  </app-panel>
+
+  <ul class="nav nav-pills">
+    <li role="presentation"><a [routerLink]="['./']" [routerLinkActive]="['active']">Reviews</a></li>
+    <li role="presentation"><a [routerLink]="['./reviews', 'add']" [routerLinkActive]="['active']">Post a review</a></li>
+  </ul>
+
+  <br />
+  
+  <router-outlet></router-outlet>
+</div>

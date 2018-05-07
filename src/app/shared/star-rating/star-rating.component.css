@@ -1,0 +1,7 @@
+.outer-container {
+    overflow: hidden; 
+}
+
+.inner-container {
+    width: 86px;
+}

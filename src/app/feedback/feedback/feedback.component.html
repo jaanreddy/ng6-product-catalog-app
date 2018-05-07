@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="well">
+    <h3>Leave feedback for the app</h3>
+    <hr/>
+
+    <form class="form-horizontal" #feedbackForm="ngForm" (ngSubmit)="sendFeedback(feedbackForm)"> 
+      <div class="form-group">
+        <label for="email" class="control-label col-md-3">Your email id</label>
+        <div class="col-md-9">
+            <input type="email" class="form-control" name="email" id="reviemailewer" ngModel #emailModel="ngModel" required />
+            <div class="alert alert-danger" *ngIf="emailModel.invalid && (emailModel.dirty || emailModel.touched)">
+                This is a required field
+            </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="feedback" class="control-label col-md-3">Your feedback</label>
+        <div class="col-md-9">
+            <textarea class="form-control" name="feedback" id="feedback" rows="5" ngModel required></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-md-offset-3 col-md-9">
+            <input type="reset" value="Reset" class="btn btn-default" />
+            <input type="submit" value="Send feedback" class="btn btn-primary" [disabled]="feedbackForm.invalid" />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
